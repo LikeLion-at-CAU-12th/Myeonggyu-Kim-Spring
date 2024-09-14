@@ -1,12 +1,7 @@
 package likelion12th.session.domain;
 
 import jakarta.persistence.*;
-import likelion12th.session.domain.music.Like;
-import likelion12th.session.domain.music.Playlist;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static jakarta.persistence.GenerationType.*;
 
