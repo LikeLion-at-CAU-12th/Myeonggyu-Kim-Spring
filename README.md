@@ -13,6 +13,5 @@ Postman 사진
 <details>
 <summary>spring 3주차 세션 과제 사진</summary>
 DB 반영 인증샷 ✌
-<img src="https://github.com/user-attachments/assets/77ec99bd-287a-41cc-9a2e-61106a95a8e5
-" alt="DB photo">
+<img src="https://github.com/user-attachments/assets/77ec99bd-287a-41cc-9a2e-61106a95a8e5" alt="DB photo">
 </details>
