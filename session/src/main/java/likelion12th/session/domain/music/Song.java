@@ -3,6 +3,7 @@ package likelion12th.session.domain.music;
 import jakarta.persistence.*;
 import likelion12th.session.domain.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,9 @@ public class Song extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "album_id")
     private Album album;
+
+    @Builder
+    public Song(String title) {
+        this.title = title;
+    }
 }

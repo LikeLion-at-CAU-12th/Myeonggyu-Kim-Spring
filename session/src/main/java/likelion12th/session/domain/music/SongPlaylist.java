@@ -1,6 +1,7 @@
 package likelion12th.session.domain.music;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,10 @@ public class SongPlaylist {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_id")
     private Playlist playlist;
+
+    @Builder
+    public SongPlaylist(Song song, Playlist playlist) {
+        this.song = song;
+        this.playlist = playlist;
+    }
 }
