@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,9 +46,9 @@ class MemberRepositoryTest {
     @Rollback()
     void save1() {
         Member member = Member.builder()
-                .username("memberA")
+                .username("member")
                 .age(24)
-                .email("kmgdding9@naver.com")
+                .email("ll12th@naver.com")
                 .build();
 
         Long saveId = repository.save(member);
@@ -66,19 +67,19 @@ class MemberRepositoryTest {
         Member member1 = Member.builder()
                 .username("member1")
                 .age(23)
-                .email("lion@lion.com")
+                .email("lion1@lion.com")
                 .build();
 
         Member member2 = Member.builder()
                 .username("member2")
                 .age(23)
-                .email("lion@lion.com")
+                .email("lion2@lion.com")
                 .build();
 
         Member member3 = Member.builder()
                 .username("member3")
                 .age(23)
-                .email("lion@lion.com")
+                .email("lion3@lion.com")
                 .build();
 
         repository.save(member1);
@@ -115,5 +116,30 @@ class MemberRepositoryTest {
         for (Member mem : result) {
             System.out.println("member = " + mem);
         }
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void duplicateEmail() {
+        //given
+        Member memberA = Member.builder()
+                .username("memberA")
+                .email("lion@lion.com")
+                .age(24)
+                .build();
+
+        Member memberB = Member.builder()
+                .username("memberB")
+                .email("lion@lion.com")
+                .age(24)
+                .build();
+
+        //when
+        repository.save(memberA);
+
+        //then
+        assertThrows(DataIntegrityViolationException.class,
+                () -> repository.save(memberB));
     }
 }
