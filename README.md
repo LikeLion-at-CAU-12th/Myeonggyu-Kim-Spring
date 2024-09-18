@@ -15,3 +15,10 @@ Postman 사진
 DB 반영 인증샷 ✌
 <img src="https://github.com/user-attachments/assets/77ec99bd-287a-41cc-9a2e-61106a95a8e5" alt="DB photo">
 </details>
+</br>
+
+<details>
+<summary>spring 3주차 챌린지 과제 사진</summary>
+Test code 통과 인증샷 ✅
+<img src="https://github.com/user-attachments/assets/cd5ebcd8-4d9e-4320-bd9f-57c437e915cf" alt="Test code">
+</details>
