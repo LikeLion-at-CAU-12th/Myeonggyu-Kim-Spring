@@ -8,14 +8,15 @@ import static jakarta.persistence.GenerationType.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class Member extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "member_id")
     private Long id;
-
     @Column(nullable = false)
     private String username;
+    @Column(unique = true)
     private String email;
     private int age;
 
