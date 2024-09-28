@@ -22,3 +22,14 @@ DB 반영 인증샷 ✌
 Test code 통과 인증샷 ✅
 <img src="https://github.com/user-attachments/assets/cd5ebcd8-4d9e-4320-bd9f-57c437e915cf" alt="Test code">
 </details>
+</br>
+
+<details>
+<summary>spring 4주차 스탠다드 과제 사진</summary>
+나이가 20 이상인 Member 조회 후 username으로 정렬 ✅
+<img src="https://github.com/user-attachments/assets/1379fc05-1e2d-4761-b7ee-dcc04ca618ff" alt="Test code">
+</br>
+</br>
+username이 특정 문자열로 시작하는 Member 조회 후 age로 정렬 ✅
+<img src="https://github.com/user-attachments/assets/e56ab6b8-8110-419e-b27f-10dbf43fc5f9" alt="Test code">
+</details>
