@@ -2,6 +2,7 @@ package likelion12th.session.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,5 +28,13 @@ public class Article {
     private List<Comment> comments = new ArrayList<>();
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    @Builder
+    public Article(String title, String content, Member member, List<Comment> comments) {
+        this.title = title;
+        this.content = content;
+        this.member = member;
+        this.comments = comments != null ? comments : new ArrayList<>();
     }
 }
