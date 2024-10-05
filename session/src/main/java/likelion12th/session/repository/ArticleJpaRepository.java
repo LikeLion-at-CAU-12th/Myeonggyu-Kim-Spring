@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ArticleJpaRepository extends JpaRepository<Article, Long> {
     List<Article> findByMemberId(Long memberId);
+
+    void deleteById(Long articleId);
 }

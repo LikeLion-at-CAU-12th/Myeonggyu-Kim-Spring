@@ -2,9 +2,11 @@ package likelion12th.session.service;
 
 import likelion12th.session.domain.*;
 import likelion12th.session.dto.request.ArticleCreateRequestDto;
+import likelion12th.session.dto.request.ArticleUpdateRequestDto;
 import likelion12th.session.dto.response.ArticleResponseDto;
 import likelion12th.session.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,5 +71,53 @@ public class ArticleService {
         return articles.stream()
                 .map(article -> new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ArticleResponseDto updateArticle(Long articleId, ArticleUpdateRequestDto requestDto) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("해당 ID를 가진 게시글이 존재하지 않습니다."));
+        //기존 article의 title, content 수정
+        if (requestDto.getTitle() != null) {
+            article.updateTitle(requestDto.getTitle());
+        }
+        if (requestDto.getContent() != null) {
+            article.updateContent(requestDto.getContent());
+        }
+
+        //기존 article의 category 삭제
+        categoryArticleRepository.deleteByArticle(article);
+        List<Long> categoryIds = requestDto.getCategoryIds();
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            for (Long categoryId : categoryIds) {
+                //카테고리 ID를 잘못 입력한 경우 예외처리
+                Category category = categoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new RuntimeException("해당 ID를 가진 카테고리가 존재하지 않습니다."));
+                CategoryArticle categoryArticle = CategoryArticle.builder()
+                        .article(article)
+                        .category(category)
+                        .build();
+                categoryArticleRepository.save(categoryArticle);
+            }
+        }
+
+        articleRepository.save(article);
+
+        ArticleLog articleLog = ArticleLog.builder()
+                .article(article)
+                .title(article.getTitle())
+                .content(article.getContent())
+                .build();
+        articleLogRepository.save(articleLog);
+
+        return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent());
+    }
+
+    @Transactional
+    public void deleteArticle(Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("해당 ID를 가진 article이 없습니다."));
+        
+        articleRepository.deleteById(article.getId());
     }
 }
