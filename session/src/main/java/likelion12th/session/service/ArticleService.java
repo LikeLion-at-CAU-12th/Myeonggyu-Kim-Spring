@@ -4,6 +4,8 @@ import likelion12th.session.domain.*;
 import likelion12th.session.dto.request.ArticleCreateRequestDto;
 import likelion12th.session.dto.request.ArticleUpdateRequestDto;
 import likelion12th.session.dto.response.ArticleResponseDto;
+import likelion12th.session.exception.CustomException;
+import likelion12th.session.exception.ErrorCode;
 import likelion12th.session.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,7 @@ public class ArticleService {
     @Transactional
     public Long createArticle(ArticleCreateRequestDto requestDto) {
         Member member = memberRepository.findById(requestDto.getMemberId())
-                //정석적인 에러 처리 방식은 아님
-                .orElseThrow(() -> new RuntimeException("해당 아이디를 가진 회원이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Article article = Article.builder()
                 .title(requestDto.getTitle())
@@ -52,7 +53,7 @@ public class ArticleService {
         if (categoryIds != null && !categoryIds.isEmpty()) {
             for (Long categoryId : categoryIds) {
                 Category category = categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new RuntimeException("해당 ID를 가진 카테고리가 존재하지 않습니다."));
+                        .orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
 
                 CategoryArticle categoryArticle = CategoryArticle.builder()
                         .category(category)
@@ -76,7 +77,7 @@ public class ArticleService {
     @Transactional
     public ArticleResponseDto updateArticle(Long articleId, ArticleUpdateRequestDto requestDto) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new RuntimeException("해당 ID를 가진 게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.ARTICLE_NOT_FOUND));
         //기존 article의 title, content 수정
         if (requestDto.getTitle() != null) {
             article.updateTitle(requestDto.getTitle());
@@ -92,7 +93,7 @@ public class ArticleService {
             for (Long categoryId : categoryIds) {
                 //카테고리 ID를 잘못 입력한 경우 예외처리
                 Category category = categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new RuntimeException("해당 ID를 가진 카테고리가 존재하지 않습니다."));
+                        .orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
                 CategoryArticle categoryArticle = CategoryArticle.builder()
                         .article(article)
                         .category(category)
@@ -116,7 +117,7 @@ public class ArticleService {
     @Transactional
     public void deleteArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new RuntimeException("해당 ID를 가진 article이 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.ARTICLE_NOT_FOUND));
         
         articleRepository.deleteById(article.getId());
     }
