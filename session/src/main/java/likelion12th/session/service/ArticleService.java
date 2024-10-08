@@ -8,7 +8,6 @@ import likelion12th.session.exception.CustomException;
 import likelion12th.session.exception.ErrorCode;
 import likelion12th.session.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,7 +86,7 @@ public class ArticleService {
         }
 
         //기존 article의 category 삭제
-        categoryArticleRepository.deleteByArticle(article);
+        categoryArticleRepository.deleteAllByArticle(article);
         List<Long> categoryIds = requestDto.getCategoryIds();
         if (categoryIds != null && !categoryIds.isEmpty()) {
             for (Long categoryId : categoryIds) {
