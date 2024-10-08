@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface CategorArticleJpaRepository extends JpaRepository<CategoryArticle, Long> {
     List<CategoryArticle> findByArticle(Article article);
+
+    void deleteByArticle(Article article);
 }
