@@ -37,3 +37,6 @@ out/
 .vscode/
 
 .idea/
+
+### SECRET KEY INFO ###
+src/main/resources/application-SECRET-KEY.properties
