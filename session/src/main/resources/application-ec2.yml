@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: ec2
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ec2-database-host}/${database-name}
+    username: ${database-username}
+    password: ${database-password}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update # Hibernate의 DDL 자동 생성 전략 (update, create, create-drop 등)
+    properties:
+      hibernate:
+        format_sql: true # 실제 db 어떻게 sql 나가는지 확인
+        dialect: org.hibernate.dialect.MySQLDialect
+  sql:
+    init:
+      mode: always # 애플리케이션 시작 시 스크립트 초기화 (기본값: embedded)
+
+logging.level:
+  org.hibernate.SQL: debug
