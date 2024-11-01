@@ -13,10 +13,15 @@ import java.util.List;
 public interface MemberJpaRepository extends JpaRepository<Member, Long> {
     List<Member> findByUsername(String username);
 
+    Member findOneByUsername(String username);
+
     //나이가 age 이상인 Member 조회
     Page<Member> findByAgeGreaterThanEqual(int age, Pageable pageable);
 
     //이름이 주어진 값으로 시작하는 Member 조회
     @Query("select m from Member m where m.username like ?1%")
     Page<Member> findByUsernameStartsWith(String start, Pageable pageable);
+
+    //username 중복 검사
+    boolean existsByUsername(String username);
 }

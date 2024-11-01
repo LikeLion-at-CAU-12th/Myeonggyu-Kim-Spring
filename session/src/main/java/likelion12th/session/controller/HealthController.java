@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RestController
 public class HealthController {
 
-    @GetMapping("/health")
+    @GetMapping("/api/health")
     public ResponseEntity<Health> healthCheck() {
         return ResponseEntity.ok().body(new Health("success", LocalDateTime.now()));
     }
